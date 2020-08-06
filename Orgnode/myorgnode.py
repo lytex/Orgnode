@@ -174,7 +174,7 @@ def maketree(filename, filecontent):
        h = n.Heading()
        todoSrch = re.search('([A-Z]+)\s(.*?)$', h)
        if todoSrch:
-           if todos.has_key( todoSrch.group(1) ):
+           if todos.get( todoSrch.group(1) ) is not None:
                n.setHeading( todoSrch.group(2) )
                n.setTodo ( todoSrch.group(1) )
        prtysrch = re.search('^\[\#(A|B|C)\] (.*?)$', n.Heading())
@@ -199,8 +199,8 @@ def makelist(filename):
    try:
       f = open(filename, 'r')
    except IOError:
-      print "Unable to open file [%s] " % filename
-      print "Program terminating."
+      print ("Unable to open file [%s] " % filename)
+      print ("Program terminating.")
       sys.exit(1)
 
    todos         = dict()  # populated from #+SEQ_TODO line
@@ -285,7 +285,7 @@ def makelist(filename):
        h = n.Heading()
        todoSrch = re.search('([A-Z]+)\s(.*?)$', h)
        if todoSrch:
-           if todos.has_key( todoSrch.group(1) ):
+           if todos.get( todoSrch.group(1) ) is not None:
                n.setHeading( todoSrch.group(2) )
                n.setTodo ( todoSrch.group(1) )
        prtysrch = re.search('^\[\#(A|B|C)\] (.*?)$', n.Heading())
@@ -387,7 +387,7 @@ class Orgnode(object):
         For example, hasTag('COMPUTER') on headling containing
         :HOME:COMPUTER: would return True.
         """
-        return self.tags.has_key(srch)
+        return self.tags.get(srch) is not None
         
     def setTag(self, newtag):
         """
